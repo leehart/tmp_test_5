@@ -51,7 +51,7 @@ class Amin1:
         return self._contigs
 
     def sample_metadata(self):
-        """Access sample metadata.
+        """Access sample metadata. 15 Sep 2023
 
         Returns
         -------
