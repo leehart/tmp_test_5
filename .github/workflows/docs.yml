@@ -7,7 +7,7 @@ on:
     branches:
       - master
 jobs:
-  documentation:
+  docs:
     strategy:
       fail-fast: true
     runs-on: ubuntu-latest
@@ -31,8 +31,8 @@ jobs:
           cd docs/
           sphinx-build -b html source build
 
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build/html
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/html
