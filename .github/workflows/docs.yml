@@ -17,7 +17,7 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v3
 
-      - name: Install poetry
+      - name: Install Poetry
         run: pipx install poetry==1.4.2
 
       - name: Set up Python
@@ -26,20 +26,23 @@ jobs:
           python-version: '3.11'
           cache: "poetry"
 
-      - name: Install dependencies
+      - name: Install Poetry dependencies
         run: poetry install
 
-      - name: Install docs dependencies
+      - name: Check package
+        run: pip show malariagen_data
+
+      - name: Install Sphinx dependencies
         run: |
           pip install -r ./docs/requirements.txt
 
-      - name: Build
+      - name: Build HTML
         run: |
           cd docs/
           sphinx-build -b html -a -E -j auto -n source build --keep-going
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy HTML to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3.6.1
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
