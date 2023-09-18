@@ -17,19 +17,26 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v3
 
+      - name: Install poetry
+        run: pipx install poetry==1.4.2
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+          cache: "poetry"
 
       - name: Install dependencies
+        run: poetry install
+
+      - name: Install docs dependencies
         run: |
           pip install -r ./docs/requirements.txt
 
       - name: Build
         run: |
           cd docs/
-          sphinx-build -b html source build
+          sphinx-build -b html -a -E -j auto -n source build --keep-going
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
